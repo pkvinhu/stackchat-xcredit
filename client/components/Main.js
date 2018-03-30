@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import MessagesList from './MessagesList';
+import NewChannelEntry from './NewChannelEntry';
+import store, { fetchMessages } from '../store';
 
-export default class Main extends Component {
+class Main extends Component {
+
+  componentDidMount () {
+    this.props.fetchInitialMessages();
+  }
 
   render () {
     return (
@@ -13,6 +20,7 @@ export default class Main extends Component {
         <Navbar />
         <main>
           <Switch>
+            <Route path="/new-channel" component={NewChannelEntry} />
             <Route path="/channels/:channelId" component={MessagesList} />
             <Redirect to="/channels/1" />
           </Switch>
@@ -21,3 +29,11 @@ export default class Main extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchInitialMessages: () => dispatch(fetchMessages())
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(Main));
