@@ -2,24 +2,23 @@ import React, { Component } from 'react';
 import Message from './Message';
 import NewMessageEntry from './NewMessageEntry';
 import axios from 'axios';
+import store, { fetchMessages } from '../store'
+import { connect } from 'react-redux'
 
-export default class MessagesList extends Component {
+class MessagesList extends Component {
 
-  constructor () {
-    super();
-    this.state = { messages: [] };
-  }
+  // constructor (props) {
+  //   super(props)
+  //   this.state = store.getState();
+  // }
 
   async componentDidMount () {
-    const response = await axios.get('/api/messages');
-    const messages = response.data;
-    this.setState({ messages });
+    this.props.fetchInitialMessages()
   }
 
   render () {
-
+    const {messages} = this.props
     const channelId = Number(this.props.match.params.channelId); // because it's a string "1", not a number!
-    const messages = this.state.messages;
     const filteredMessages = messages.filter(message => message.channelId === channelId);
 
     return (
@@ -27,8 +26,19 @@ export default class MessagesList extends Component {
         <ul className="media-list">
           { filteredMessages.map(message => <Message message={message} key={message.id} />) }
         </ul>
-        <NewMessageEntry />
+        <NewMessageEntry channelId={channelId}/>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  messages: state.messages
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchInitialMessages: () => dispatch(fetchMessages())
+})
+
+
+ export default connect(mapStateToProps, mapDispatchToProps)(MessagesList)
