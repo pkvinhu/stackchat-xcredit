@@ -21,19 +21,11 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
-<<<<<<< HEAD
-    "react-router-dom": "^4.0.0",
-    "redux": "^3.6.0",
-    "redux-devtools-extension": "^2.13.0",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
-=======
     "react-router": "^4.3.1",
     "react-router-dom": "^4.0.0",
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
->>>>>>> 9f099c8fb81fe403e735b0ea9da638d4441e8c88
     "sequelize": "^4.4.0",
     "socket.io": "^1.7.2"
   },
