@@ -25,13 +25,16 @@ router.post('/', async (req, res, next) => {
         name: req.body.name || 'Cody'
       }
     })
+    console.log(req.body)
     const message = Message.build(req.body);
     message.setAuthor(author, { save: false });
     await message.save()
     const returnMessage = message.toJSON();
     returnMessage.author = author;
+    console.log(returnMessage)
     res.json(returnMessage);
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
