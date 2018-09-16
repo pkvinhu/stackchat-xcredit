@@ -12,34 +12,22 @@ const LUNCH_CHANNEL = '/channels/4';
 class ChannelList extends Component {
 
   render () {
-    const { messages } = this.props;
+    const { messages, channels } = this.props;
 
     return (
       <ul>
+      {channels.map(channel=> {
+        return (
+        <div key={channel.id}>
         <li>
-          <NavLink to={RANDOM_CHANNEL} activeClassName="active">
-            <span># really_random</span>
-            <span className="badge">{ messages.filter(message => message.channelId === 1).length }</span>
+          <NavLink to={`/channels/${channel.id}`} activeClassName="active">
+            <span># {channel.name}</span>
+            <span className="badge">{ messages.filter(message => message.channelId === channel.id).length }</span>
           </NavLink>
         </li>
-        <li>
-          <NavLink to={GENERAL_CHANNEL} activeClassName="active">
-            <span># generally_speaking</span>
-            <span className="badge">{ messages.filter(message => message.channelId === 2).length }</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={DOGS_CHANNEL} activeClassName="active">
-            <span># dogs_of_fullstack</span>
-            <span className="badge">{ messages.filter(message => message.channelId === 3).length }</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to={LUNCH_CHANNEL} activeClassName="active">
-            <span># lunch_planning</span>
-            <span className="badge">{ messages.filter(message => message.channelId === 4).length }</span>
-          </NavLink>
-        </li>
+        </div>
+        )
+        })}
         <li>
           <NavLink to="/new-channel">Create a channel...</NavLink>
         </li>
@@ -48,10 +36,9 @@ class ChannelList extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    messages: state.messages
-  }
-}
+const mapStateToProps = (state) => ({
+    messages: state.messages,
+    channels: state.channels
+})
 
 export default withRouter(connect(mapStateToProps)(ChannelList));
