@@ -36,10 +36,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispathToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateName: (name) => dispatch(updateName(name))
   }
 }
 
-export default connect(mapStateToProps, mapDispathToProps)(NameEntry);
+export default connect(mapStateToProps, mapDispatchToProps)(NameEntry);
